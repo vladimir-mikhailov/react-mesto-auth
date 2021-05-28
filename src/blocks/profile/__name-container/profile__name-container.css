@@ -1,0 +1,12 @@
+.profile__name-container {
+  display: flex;
+  align-items: baseline;
+  width: 100%;
+  transform: translateX(14px);
+}
+
+@media screen and (min-width: 618px) {
+  .profile__name-container {
+    transform: none;
+  }
+}

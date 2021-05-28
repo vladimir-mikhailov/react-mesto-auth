@@ -1,0 +1,18 @@
+.trash-button {
+  background: url(../../images/trash.svg) no-repeat;
+  width: 18px;
+  height: 19px; /* Убрал дробную часть пикселя */
+  margin: 18px 15px 0 0;
+  grid-area: 1/1/2/2;
+  justify-self: end;
+  align-self: start;
+  border: none;
+  outline: none;
+  z-index: 2;
+  transition: opacity .2s;
+}
+
+.trash-button:hover {
+  opacity: .6;
+  cursor: pointer;
+}

@@ -1,0 +1,6 @@
+.section {
+  display: flex;
+  justify-content: flex-start;
+  flex-flow: column nowrap;
+  max-width: 880px;
+}

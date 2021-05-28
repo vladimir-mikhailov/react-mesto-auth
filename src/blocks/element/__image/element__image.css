@@ -1,0 +1,16 @@
+.element__image {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  width: 282px;
+  height: 282px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  grid-area: 1/1/2/2;
+  transition: opacity .2s;
+}
+
+.element__image:hover {
+  cursor: pointer;
+  opacity: .95;
+}

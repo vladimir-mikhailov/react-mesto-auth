@@ -1,0 +1,31 @@
+.form__input {
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 17px;
+  outline: none;
+  border: none;
+  box-sizing: border-box;
+  border-bottom: 1px solid rgba(0,0,0,.2);
+  padding: 0 0 9px;
+  margin: 10px auto 0;
+  width: 238px;
+  border-radius: 0;
+}
+
+.form__input:focus {
+  border-bottom: 1px solid rgba(0,0,0,.6);
+}
+
+.form__input:first-of-type {
+  margin-top: 75px;
+}
+
+@media screen and (min-width: 618px) {
+  .form__input {
+    width: 358px;
+  }
+  .form__input:first-of-type {
+    margin-top: calc(54px - 6px);
+  }
+}
