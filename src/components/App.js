@@ -94,7 +94,7 @@ function App() {
   };
   // Будет автологин, когда перестанем удалять токен при открытии окна
   // eslint-disable-next-line
-  //useEffect(() => checkTokenAndGetUserData(), [])
+  useEffect(() => checkTokenAndGetUserData(), [])
 
   const resetInfoTooltip = () => {
     setInfoTooltipType('');
