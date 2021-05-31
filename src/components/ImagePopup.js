@@ -1,5 +1,5 @@
-import { HandleClickOnOverlayContext } from "../contexts/HandleClickOnOverlayContext";
-import {useContext} from "react";
+import { HandleClickOnOverlayContext } from '../contexts/HandleClickOnOverlayContext';
+import { useContext } from 'react';
 
 function ImagePopup({ card, isOpen, onClose }) {
   const handleClickOnOverlay = useContext(HandleClickOnOverlayContext);

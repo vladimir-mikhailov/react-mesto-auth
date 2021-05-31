@@ -1,19 +1,19 @@
-import Form from "./Form";
-import { HandleClickOnOverlayContext } from "../contexts/HandleClickOnOverlayContext";
-import {useContext} from "react";
+import Form from './Form';
+import { HandleClickOnOverlayContext } from '../contexts/HandleClickOnOverlayContext';
+import { useContext } from 'react';
 
 function PopupWithForm({
-                         title,
-                         name,
-                         isPopup,
-                         isOpen,
-                         onClose,
-                         onSubmit,
-                         children,
-                         isFormValid,
-                         isSaving,
-                         buttonValues,
-                       }) {
+  title,
+  name,
+  isPopup,
+  isOpen,
+  onClose,
+  onSubmit,
+  children,
+  isFormValid,
+  isSaving,
+  buttonValues,
+}) {
   const handleClickOnOverlay = useContext(HandleClickOnOverlayContext);
 
   return (

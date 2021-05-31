@@ -1,19 +1,25 @@
-import {useEffect} from "react";
-import Form from "./Form";
-import {Link} from "react-router-dom";
-import Input from "./Input";
-import {useFormValidation} from "./useFormValidation";
+import { useEffect } from 'react';
+import Form from './Form';
+import { Link } from 'react-router-dom';
+import Input from './Input';
+import { useFormValidation } from './useFormValidation';
 
-const Register = ({handleRegister, isSaving, isPopup}) => {
-  const {values, errors, isFormValid, handleChange, resetForm} = useFormValidation()
-  useEffect(() => resetForm(), [resetForm])
+const Register = ({ handleRegister, isSaving, isPopup }) => {
+  const {
+    values,
+    errors,
+    isFormValid,
+    handleChange,
+    resetForm,
+  } = useFormValidation();
+  useEffect(() => resetForm(), [resetForm]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     const { email, password } = values;
     handleRegister({ email, password });
     resetForm();
-  }
+  };
 
   return (
     <main className='main section section_centered form__container'>
@@ -24,7 +30,10 @@ const Register = ({handleRegister, isSaving, isPopup}) => {
         onSubmit={handleSubmit}
         isFormValid={isFormValid}
         isSaving={isSaving}
-        buttonValues={{ isSaving: 'Регистрация...', default: 'Зарегистрироваться' }}
+        buttonValues={{
+          isSaving: 'Регистрация...',
+          default: 'Зарегистрироваться',
+        }}
       >
         <Input
           name='email'
@@ -51,16 +60,14 @@ const Register = ({handleRegister, isSaving, isPopup}) => {
           error={errors.password || ''}
         />
       </Form>
-      <span
-        className='form__bottom-text'
-      >
-        Уже зарегистрированы? {' '}
+      <span className='form__bottom-text'>
+        Уже зарегистрированы?{' '}
         <Link to='/sign-in' className='form__bottom-link'>
           Войти
         </Link>
       </span>
     </main>
-  )
-}
+  );
+};
 
-export default Register
+export default Register;

@@ -1,12 +1,26 @@
 import PopupWithForm from './PopupWithForm';
-import {useContext, useEffect} from 'react';
-import {CurrentUserContext} from '../contexts/CurrentUserContext';
-import Input from "./Input";
-import {useFormValidation} from "./useFormValidation";
+import { useContext, useEffect } from 'react';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import Input from './Input';
+import { useFormValidation } from './useFormValidation';
 
-function EditProfilePopup({isOpen, onClose, onUpdateUser, isSaving, handleClickOnOverlay}) {
+function EditProfilePopup({
+  isOpen,
+  onClose,
+  onUpdateUser,
+  isSaving,
+  handleClickOnOverlay,
+}) {
   const currentUser = useContext(CurrentUserContext);
-  const {values, setValues, errors, isFormValid, setIsFormValid, handleChange, resetForm} = useFormValidation()
+  const {
+    values,
+    setValues,
+    errors,
+    isFormValid,
+    setIsFormValid,
+    handleChange,
+    resetForm,
+  } = useFormValidation();
 
   useEffect(() => {
     resetForm();
@@ -29,7 +43,7 @@ function EditProfilePopup({isOpen, onClose, onUpdateUser, isSaving, handleClickO
       onSubmit={handleSubmit}
       isFormValid={isFormValid}
       isSaving={isSaving}
-      buttonValues={{isSaving: 'Сохранение...', default: 'Сохранить'}}
+      buttonValues={{ isSaving: 'Сохранение...', default: 'Сохранить' }}
     >
       <Input
         name='name'

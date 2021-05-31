@@ -1,11 +1,17 @@
 import PopupWithForm from './PopupWithForm';
 import { useEffect } from 'react';
-import {useFormValidation} from "./useFormValidation";
-import Input from "./Input";
+import { useFormValidation } from './useFormValidation';
+import Input from './Input';
 
 function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isSaving }) {
-  const { errors, values, isFormValid, handleChange, resetForm } = useFormValidation()
-  useEffect(() => resetForm(), [resetForm, isOpen])
+  const {
+    errors,
+    values,
+    isFormValid,
+    handleChange,
+    resetForm,
+  } = useFormValidation();
+  useEffect(() => resetForm(), [resetForm, isOpen]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -13,7 +19,7 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isSaving }) {
       avatar: values.avatar,
     });
     e.target.reset();
-    resetForm()
+    resetForm();
   }
 
   return (

@@ -1,5 +1,16 @@
-const Input = ({type, name, placeholder, isPopup, minLength, maxLength, required, onChange, value, error}) => {
-    return (
+const Input = ({
+  type,
+  name,
+  placeholder,
+  isPopup,
+  minLength,
+  maxLength,
+  required,
+  onChange,
+  value,
+  error,
+}) => {
+  return (
     <>
       <input
         type={type}
@@ -17,10 +28,10 @@ const Input = ({type, name, placeholder, isPopup, minLength, maxLength, required
           error === '' ? '' : ' form__input-error_visible'
         }`}
       >
-          {error}
-        </span>
+        {error}
+      </span>
     </>
-  )
-}
+  );
+};
 
-export default Input
+export default Input;

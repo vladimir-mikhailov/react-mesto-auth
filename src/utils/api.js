@@ -1,7 +1,7 @@
 import { apiData } from './utils';
 
 class Api {
-  constructor({baseUrl, authToken, authBaseUrl}) {
+  constructor({ baseUrl, authToken, authBaseUrl }) {
     this.baseUrl = baseUrl;
     this.authToken = authToken;
   }

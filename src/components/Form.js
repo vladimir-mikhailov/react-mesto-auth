@@ -6,7 +6,7 @@ const Form = ({
   isFormValid,
   isSaving,
   buttonValues,
-  isPopup
+  isPopup,
 }) => {
   return (
     <form
@@ -15,14 +15,14 @@ const Form = ({
       onSubmit={onSubmit}
       noValidate
     >
-      <h2
-        className={`form__title${isPopup ? ' form__title_popup' : ''}`}
-      >
+      <h2 className={`form__title${isPopup ? ' form__title_popup' : ''}`}>
         {title}
       </h2>
       {children}
       <button
-        className={`form__button${isPopup?' form__button_popup':''}${(isFormValid) ? '' : isPopup ? ' form__button_disabled' : ''}`}
+        className={`form__button${isPopup ? ' form__button_popup' : ''}${
+          isFormValid ? '' : isPopup ? ' form__button_disabled' : ''
+        }`}
         type='submit'
         aria-label={buttonValues.default}
         name={name}
@@ -31,7 +31,7 @@ const Form = ({
         {isSaving ? buttonValues.isSaving : buttonValues.default}
       </button>
     </form>
-  )
-}
+  );
+};
 
-export default Form
+export default Form;

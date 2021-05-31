@@ -1,17 +1,23 @@
-import {useFormValidation} from "./useFormValidation";
-import Form from "./Form";
-import Input from "./Input";
-import {useEffect} from "react";
+import { useFormValidation } from './useFormValidation';
+import Form from './Form';
+import Input from './Input';
+import { useEffect } from 'react';
 
-const Login = ({handleLogin, isSaving, isPopup}) => {
-  const {values, errors, isFormValid, handleChange, resetForm} = useFormValidation()
-  useEffect(() => resetForm(), [resetForm])
+const Login = ({ handleLogin, isSaving, isPopup }) => {
+  const {
+    values,
+    errors,
+    isFormValid,
+    handleChange,
+    resetForm,
+  } = useFormValidation();
+  useEffect(() => resetForm(), [resetForm]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
-    const {email, password} = values;
-    handleLogin({email, password});
-  }
+    const { email, password } = values;
+    handleLogin({ email, password });
+  };
 
   return (
     <main className='main section section_centered form__container'>
@@ -50,7 +56,7 @@ const Login = ({handleLogin, isSaving, isPopup}) => {
         />
       </Form>
     </main>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

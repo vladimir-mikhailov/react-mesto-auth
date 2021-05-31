@@ -1,11 +1,17 @@
 import PopupWithForm from './PopupWithForm';
 import { useEffect } from 'react';
-import Input from "./Input";
-import {useFormValidation} from "./useFormValidation";
+import Input from './Input';
+import { useFormValidation } from './useFormValidation';
 
 function AddPlacePopup({ isOpen, onClose, onAddPlace, isSaving }) {
-  const {values, errors, isFormValid, handleChange, resetForm} = useFormValidation()
-  useEffect(() => resetForm(), [resetForm])
+  const {
+    values,
+    errors,
+    isFormValid,
+    handleChange,
+    resetForm,
+  } = useFormValidation();
+  useEffect(() => resetForm(), [resetForm]);
 
   useEffect(() => {
     resetForm();

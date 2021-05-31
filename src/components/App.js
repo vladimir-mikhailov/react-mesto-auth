@@ -3,8 +3,8 @@ import { Route, Switch, Redirect, useHistory } from 'react-router-dom';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import { HandleClickOnOverlayContext } from '../contexts/HandleClickOnOverlayContext';
 import api from '../utils/api';
-import auth from "../utils/auth";
-import translateError from "../utils/translateError";
+import auth from '../utils/auth';
+import translateError from '../utils/translateError';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
@@ -13,10 +13,10 @@ import ImagePopup from './ImagePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
 import PopupDeleteCard from './PopupDeleteCard';
-import ProtectedRoute from "./ProtectedRoute";
-import Register from "./Register";
-import Login from "./Login";
-import InfoTooltip from "./InfoTooltip";
+import ProtectedRoute from './ProtectedRoute';
+import Register from './Register';
+import Login from './Login';
+import InfoTooltip from './InfoTooltip';
 
 function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
@@ -24,19 +24,19 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
   const [isDeleteCardPopupOpen, setIsDeleteCardPopupOpen] = useState(false);
-  const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = useState(false)
+  const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState({});
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
   const [isSaving, setIsSaving] = useState(false);
   const [cardToDelete, setCardToDelete] = useState({});
-  const [infoTooltipType, setInfoTooltipType] = useState('')
-  const [infoTooltipMessage, setInfoTooltipMessage] = useState('')
-  const [loggedIn, setLoggedIn] = useState(false)
+  const [infoTooltipType, setInfoTooltipType] = useState('');
+  const [infoTooltipMessage, setInfoTooltipMessage] = useState('');
+  const [loggedIn, setLoggedIn] = useState(false);
   const [userData, setUserData] = useState({
     email: '',
     id: '',
-  })
+  });
 
   const history = useHistory();
 
@@ -62,53 +62,54 @@ function App() {
     function handleEscClose(evt) {
       evt.key === 'Escape' && closeAllPopups();
     }
+
     document.addEventListener('keydown', handleEscClose);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
 
   // По заданию при повторном визите
   // пользователи не должны вновь авторизовываться.
   // Поэтому удаляем токен, даже если он остался
   // после закрытия окна:
   useEffect(() => {
-    localStorage.getItem('jwt') && localStorage.removeItem('jwt')
-  }, [])
+    localStorage.getItem('jwt') && localStorage.removeItem('jwt');
+  }, []);
   // хотя логичнее было бы сразу залогинить
-
 
   const checkTokenAndGetUserData = () => {
     if (localStorage.getItem('jwt')) {
       const jwt = localStorage.getItem('jwt');
-      auth.getUserData(jwt)
+      auth
+        .getUserData(jwt)
         .then(res => {
           if (res) {
             setLoggedIn(true);
-            setUserData({id: res.data._id, email: res.data.email})
+            setUserData({ id: res.data._id, email: res.data.email });
           }
         })
         .catch(err => {
-          console.log(err)
+          console.log(err);
         });
     }
-  }
+  };
   // Будет автологин, когда перестанем удалять токен при открытии окна
   // eslint-disable-next-line
   //useEffect(() => checkTokenAndGetUserData(), [])
 
   const resetInfoTooltip = () => {
-    setInfoTooltipType('')
-    setInfoTooltipMessage('')
-  }
+    setInfoTooltipType('');
+    setInfoTooltipMessage('');
+  };
 
-  const handleRegister = (userData) => {
+  const handleRegister = userData => {
     setIsSaving(true);
-    auth.register(userData)
+    auth
+      .register(userData)
       .then(res => {
         if (res) {
-          setIsSaving(false)
+          setIsSaving(false);
           setInfoTooltipType('success');
-          setInfoTooltipMessage('Вы успешно зарегистрировались!')
+          setInfoTooltipMessage('Вы успешно зарегистрировались!');
           setIsInfoTooltipPopupOpen(true);
           setTimeout(() => {
             history.push('/sign-in');
@@ -122,18 +123,19 @@ function App() {
       })
       .catch(err => {
         if (err) {
-          setIsSaving(false)
+          setIsSaving(false);
           setInfoTooltipType('error');
           setInfoTooltipMessage(`${err.error || err.message}.
-          Попробуйте ещё раз.`)
+          Попробуйте ещё раз.`);
           setIsInfoTooltipPopupOpen(true);
         }
       });
-  }
+  };
 
-  const handleLogin = ({email, password}) => {
+  const handleLogin = ({ email, password }) => {
     setIsSaving(true);
-    auth.login({email, password})
+    auth
+      .login({ email, password })
       .then(res => {
         if (res) {
           localStorage.setItem('jwt', res.token);
@@ -143,14 +145,12 @@ function App() {
         }
       })
       .catch(err => {
-        setIsSaving(false)
+        setIsSaving(false);
         setInfoTooltipType('error');
-        setInfoTooltipMessage(
-          translateError(err.error || err.message)
-        )
+        setInfoTooltipMessage(translateError(err.error || err.message));
         setIsInfoTooltipPopupOpen(true);
       });
-  }
+  };
 
   const handleLogout = () => {
     localStorage.removeItem('jwt');
@@ -160,11 +160,11 @@ function App() {
       id: '',
     });
     history.push('/sign-in');
-  }
+  };
 
-  const handleClickOnOverlay = (e) => {
+  const handleClickOnOverlay = e => {
     e.target === e.currentTarget && closeAllPopups();
-  }
+  };
 
   function handleDeleteCardClick(card) {
     setCardToDelete(card);
@@ -200,12 +200,12 @@ function App() {
     setTimeout(() => setIsSaving(false), 300);
   }
 
-  const closeInfoTooltipPopup = (isSuccess) => {
-    isSuccess && history.push('/sign-in')
-    closeAllPopups()
-  }
+  const closeInfoTooltipPopup = isSuccess => {
+    isSuccess && history.push('/sign-in');
+    closeAllPopups();
+  };
 
-  const handleUpdateUser = (user) => {
+  const handleUpdateUser = user => {
     setIsSaving(true);
     api
       .setUserInfo(user)
@@ -214,9 +214,9 @@ function App() {
         closeAllPopups();
       })
       .catch(err => console.log(err));
-  }
+  };
 
-  const handleUpdateAvatar = (userData) => {
+  const handleUpdateAvatar = userData => {
     setIsSaving(true);
     api
       .updateUserAvatar(userData)
@@ -225,9 +225,9 @@ function App() {
         closeAllPopups();
       })
       .catch(err => console.log(err));
-  }
+  };
 
-  const handleCardLike = (card) => {
+  const handleCardLike = card => {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
     api
       .changeLikeCardStatus(card._id, isLiked)
@@ -235,9 +235,9 @@ function App() {
         setCards(state => state.map(c => (c._id === card._id ? newCard : c)));
       })
       .catch(err => console.log(err));
-  }
+  };
 
-  const handleCardDelete = (card) => {
+  const handleCardDelete = card => {
     setIsSaving(true);
     api
       .deleteCard(card._id)
@@ -246,9 +246,9 @@ function App() {
         closeAllPopups();
       })
       .catch(err => console.log(err));
-  }
+  };
 
-  const handleAddPlaceSubmit = (newCard) => {
+  const handleAddPlaceSubmit = newCard => {
     setIsSaving(true);
     api
       .addCard(newCard)
@@ -257,7 +257,7 @@ function App() {
         closeAllPopups();
       })
       .catch(err => console.log(err));
-  }
+  };
   return (
     <HandleClickOnOverlayContext.Provider value={handleClickOnOverlay}>
       <CurrentUserContext.Provider value={currentUser}>
@@ -281,23 +281,23 @@ function App() {
               onCardDelete={handleDeleteCardClick}
               cards={cards}
             />
-            <Route path="/sign-up">
+            <Route path='/sign-up'>
               <Register
                 handleRegister={handleRegister}
                 isSaving={isSaving}
                 isPopup={false}
               />
             </Route>
-            <Route path="/sign-in">
-              {loggedIn && <Redirect to='/'/>}
+            <Route path='/sign-in'>
+              {loggedIn && <Redirect to='/' />}
               <Login
                 handleLogin={handleLogin}
                 isSaving={isSaving}
                 isPopup={false}
               />
             </Route>
-            <Route path="*">
-              <Redirect to={loggedIn ? '/' : '/sign-in'}/>
+            <Route path='*'>
+              <Redirect to={loggedIn ? '/' : '/sign-in'} />
             </Route>
           </Switch>
           <Footer />
