@@ -22,7 +22,7 @@ function Header({handleLogout, userEmail, loggedIn}) {
         <div className={`header__menu-container`}>
           <span className={`header__user-email desktop-hidden`}>{userEmail}</span>
           <Link
-            to='./sign-in'
+            to='/sign-in'
             onClick={handleBurgerLogout}
             className={`header__user-auth-link header__user-auth-link_gray header__user-auth-link_burger desktop-hidden`}
           >
@@ -33,7 +33,7 @@ function Header({handleLogout, userEmail, loggedIn}) {
       }
       <div className="header__main-container">
         <Link
-          to={loggedIn ? '/' : './sign-in'}
+          to={loggedIn ? '/' : '/sign-in'}
           className='header__logo'
           aria-label='Логотип'
           title='Mesto Russia'
@@ -47,7 +47,7 @@ function Header({handleLogout, userEmail, loggedIn}) {
               <>
                 <span className={`header__user-email mobile-hidden`}>{userEmail}</span>
                 <Link
-                  to='./sign-in'
+                  to='/sign-in'
                   onClick={handleLogout}
                   className={`header__user-auth-link header__user-auth-link_gray mobile-hidden`}
                 >
@@ -58,7 +58,7 @@ function Header({handleLogout, userEmail, loggedIn}) {
             : (
               <>
                 <Link
-                  to={`${pathname === '/sign-in' ? './sign-up' : './sign-in'}`}
+                  to={`${pathname === '/sign-in' ? '/sign-up' : '/sign-in'}`}
                   className='header__user-auth-link'
                 >
                   {`${pathname === '/sign-in' ? 'Регистрация' : 'Вход'}`}
