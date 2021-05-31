@@ -1,0 +1,19 @@
+.form__button_popup {
+  margin: 25px auto 25px;
+  background: #000;
+  color: #fff;
+  font-size: 14px;
+  line-height: 17px;
+  width: 238px;
+}
+
+.form__button_popup:hover {
+  background: rgba(0, 0, 0, .8);
+}
+
+@media screen and (min-width: 618px) {
+  .form__button_popup {
+    width: 358px;
+    margin: 28px auto 37px;
+  }
+}

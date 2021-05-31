@@ -1,0 +1,27 @@
+.form__input_popup {
+  padding: 0 0 9px;
+  margin-top: 10px;
+  width: 238px;
+  font-weight: 400;
+  color: #000;
+  background-color: #fff;
+  border-bottom: 1px solid rgba(0,0,0,.2);
+}
+
+.form__input_popup:focus {
+  border-bottom: 1px solid rgba(0,0,0,.6);
+}
+
+.form__input_popup:first-of-type {
+  margin-top: 75px;
+}
+
+@media screen and (min-width: 618px) {
+  .form__input_popup{
+    width: 358px;
+  }
+  .form__input_popup:first-of-type {
+    margin-top: calc(54px - 6px);
+
+  }
+}

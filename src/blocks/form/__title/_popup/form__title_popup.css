@@ -1,0 +1,11 @@
+.form__title_popup {
+  margin-top: 25px;
+  font-size: 18px;
+  line-height: 22px;
+}
+
+@media screen and (min-width: 618px) {
+  .form__title_popup {
+    margin: 34px auto 0 36px;
+  }
+}

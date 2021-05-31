@@ -1,0 +1,5 @@
+@media screen and (max-width: 617px) {
+  .popup__button-close_mobile-centered {
+    right: calc(282px / 2 - 18px);
+  }
+}

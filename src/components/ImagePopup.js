@@ -1,7 +1,8 @@
+import { HandleClickOnOverlayContext } from "../contexts/HandleClickOnOverlayContext";
+import {useContext} from "react";
+
 function ImagePopup({ card, isOpen, onClose }) {
-  function handleClickOnOverlay(evt) {
-    evt.target === evt.currentTarget && onClose();
-  }
+  const handleClickOnOverlay = useContext(HandleClickOnOverlayContext);
 
   return (
     <div

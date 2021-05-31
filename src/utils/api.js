@@ -1,9 +1,9 @@
 import { apiData } from './utils';
 
 class Api {
-  constructor(options) {
-    this.baseUrl = options.baseUrl;
-    this.authToken = options.authToken;
+  constructor({baseUrl, authToken, authBaseUrl}) {
+    this.baseUrl = baseUrl;
+    this.authToken = authToken;
   }
 
   _handleResponse(res) {

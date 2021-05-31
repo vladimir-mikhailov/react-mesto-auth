@@ -1,4 +1,6 @@
 .form {
   display: flex;
   flex-flow: column nowrap;
+  /*color: #fff;*/
+  /*background-color: #000000;*/
 }

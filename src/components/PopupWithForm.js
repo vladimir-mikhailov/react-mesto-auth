@@ -1,17 +1,20 @@
+import Form from "./Form";
+import { HandleClickOnOverlayContext } from "../contexts/HandleClickOnOverlayContext";
+import {useContext} from "react";
+
 function PopupWithForm({
-  title,
-  name,
-  isOpen,
-  onClose,
-  onSubmit,
-  children,
-  isFormValid,
-  isSaving,
-  buttonValues,
-}) {
-  function handleClickOnOverlay(evt) {
-    evt.target === evt.currentTarget && onClose();
-  }
+                         title,
+                         name,
+                         isPopup,
+                         isOpen,
+                         onClose,
+                         onSubmit,
+                         children,
+                         isFormValid,
+                         isSaving,
+                         buttonValues,
+                       }) {
+  const handleClickOnOverlay = useContext(HandleClickOnOverlayContext);
 
   return (
     <div
@@ -25,26 +28,17 @@ function PopupWithForm({
           aria-label='Закрыть попап'
           onClick={onClose}
         />
-        <form
-          className={`form ${name}`}
+        <Form
+          title={title}
           name={name}
+          isPopup={isPopup}
           onSubmit={onSubmit}
-          noValidate
+          isFormValid={isFormValid}
+          isSaving={isSaving}
+          buttonValues={buttonValues}
         >
-          <h2 className='form__title'>{title}</h2>
           {children}
-          <button
-            className={`form__button${
-              isFormValid ? '' : ' form__button_disabled'
-            }`}
-            type='submit'
-            aria-label={buttonValues.default}
-            name={name}
-            disabled={!isFormValid}
-          >
-            {isSaving ? buttonValues.isSaving : buttonValues.default}
-          </button>
-        </form>
+        </Form>
       </div>
     </div>
   );

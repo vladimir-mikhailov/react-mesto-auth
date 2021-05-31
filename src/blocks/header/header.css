@@ -3,6 +3,7 @@
   box-sizing: border-box;
   width: 100%;
   max-width: calc(282px * 2 + 17px);
+  display: flex;
 }
 
 @media screen and (min-width: 1024px) {

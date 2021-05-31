@@ -1,28 +1,18 @@
 import PopupWithForm from './PopupWithForm';
-import { useState, useContext, useEffect } from 'react';
-import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import {useContext, useEffect} from 'react';
+import {CurrentUserContext} from '../contexts/CurrentUserContext';
+import Input from "./Input";
+import {useFormValidation} from "./useFormValidation";
 
-function EditProfilePopup({ isOpen, onClose, onUpdateUser, isSaving }) {
+function EditProfilePopup({isOpen, onClose, onUpdateUser, isSaving, handleClickOnOverlay}) {
   const currentUser = useContext(CurrentUserContext);
-  const [isFormValid, setIsFormValid] = useState(false);
-  const [values, setValues] = useState({});
-  const [errors, setErrors] = useState({});
+  const {values, setValues, errors, isFormValid, setIsFormValid, handleChange, resetForm} = useFormValidation()
 
   useEffect(() => {
+    resetForm();
     setValues(currentUser);
-    setIsFormValid(false);
-  }, [currentUser, isOpen]);
-
-  function formValidation(input) {
-    setIsFormValid(input.closest('form').checkValidity());
-  }
-
-  const handleChange = e => {
-    const { name, value } = e.target;
-    setValues({ ...values, [name]: value });
-    setErrors({ ...errors, [name]: e.target.validationMessage });
-    formValidation(e.target);
-  };
+    setIsFormValid(true);
+  }, [isOpen, currentUser, setIsFormValid, resetForm, setValues]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -33,55 +23,38 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isSaving }) {
     <PopupWithForm
       name='edit-form'
       title='Редактировать профиль'
+      isPopup={true}
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
       isFormValid={isFormValid}
       isSaving={isSaving}
-      buttonValues={{ isSaving: 'Сохранение...', default: 'Сохранить' }}
+      buttonValues={{isSaving: 'Сохранение...', default: 'Сохранить'}}
     >
-      <input
-        type='text'
-        id='profile-name'
-        className='form__input form__input_type_name'
+      <Input
         name='name'
         placeholder='Имя'
+        type='text'
+        isPopup={true}
         minLength='2'
         maxLength='40'
-        required
+        required={true}
         onChange={handleChange}
         value={values.name || ''}
+        error={errors.name || ''}
       />
-      {isOpen && (
-        <span
-          className={`form__input-error${
-            errors.name === '' ? '' : ' form__input-error_visible'
-          }`}
-        >
-          {errors.name}
-        </span>
-      )}
-      <input
-        type='text'
-        id='profile-description'
-        className='form__input form__input_type_description'
+      <Input
         name='about'
         placeholder='О себе'
+        type='text'
+        isPopup={true}
         minLength='2'
         maxLength='200'
-        required
+        required={true}
         onChange={handleChange}
         value={values.about || ''}
+        error={errors.about || ''}
       />
-      {isOpen && (
-        <span
-          className={`form__input-error${
-            errors.about === '' ? '' : ' form__input-error_visible'
-          }`}
-        >
-          {errors.about}
-        </span>
-      )}
     </PopupWithForm>
   );
 }

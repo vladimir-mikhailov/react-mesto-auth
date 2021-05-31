@@ -11,6 +11,7 @@ function PopupDeleteCard({ isOpen, onClose, isSaving, card, onDelete }) {
       name='card-delete'
       title='Уверены?'
       isOpen={isOpen}
+      isPopup={true}
       onClose={onClose}
       onSubmit={handleSubmit}
       isSaving={isSaving}

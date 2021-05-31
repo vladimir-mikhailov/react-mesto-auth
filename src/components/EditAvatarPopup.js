@@ -1,26 +1,19 @@
 import PopupWithForm from './PopupWithForm';
-import { useRef, useState } from 'react';
+import { useEffect } from 'react';
+import {useFormValidation} from "./useFormValidation";
+import Input from "./Input";
 
 function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isSaving }) {
-  const inputRef = useRef();
-  const [isFormValid, setIsFormValid] = useState(false);
-  const [error, setError] = useState('');
-
-  function formValidation(input) {
-    setIsFormValid(input.closest('form').checkValidity());
-  }
-
-  function handleChange(e) {
-    formValidation(e.target);
-    setError(e.target.validationMessage);
-  }
+  const { errors, values, isFormValid, handleChange, resetForm } = useFormValidation()
+  useEffect(() => resetForm(), [resetForm, isOpen])
 
   function handleSubmit(e) {
     e.preventDefault();
     onUpdateAvatar({
-      avatar: inputRef.current.value,
+      avatar: values.avatar,
     });
     e.target.reset();
+    resetForm()
   }
 
   return (
@@ -28,31 +21,23 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isSaving }) {
       name='update-avatar'
       title='Обновить аватар'
       isOpen={isOpen}
+      isPopup={true}
       onClose={onClose}
       onSubmit={handleSubmit}
       isFormValid={isFormValid}
       isSaving={isSaving}
       buttonValues={{ isSaving: 'Сохранение...', default: 'Сохранить' }}
     >
-      <input
+      <Input
         type='url'
-        id='profile-avatar'
-        className='form__input'
         name='avatar'
+        isPopup={true}
         placeholder='Ссылка на изображение'
         required
-        ref={inputRef}
         onChange={handleChange}
+        value={values.avatar || ''}
+        error={errors.avatar || ''}
       />
-      {isOpen && (
-        <span
-          className={`form__input-error${
-            isFormValid ? '' : ' form__input-error_visible'
-          }`}
-        >
-          {error}
-        </span>
-      )}
     </PopupWithForm>
   );
 }

@@ -1,0 +1,7 @@
+@media screen and (min-width: 618px) {
+  .button-close {
+    width: unset;
+    height: unset;
+    background: none;
+  }
+}

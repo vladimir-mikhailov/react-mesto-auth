@@ -1,35 +1,26 @@
 import PopupWithForm from './PopupWithForm';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import Input from "./Input";
+import {useFormValidation} from "./useFormValidation";
 
 function AddPlacePopup({ isOpen, onClose, onAddPlace, isSaving }) {
-  const [isFormValid, setIsFormValid] = useState(false);
-  const [values, setValues] = useState({});
-  const [errors, setErrors] = useState({});
+  const {values, errors, isFormValid, handleChange, resetForm} = useFormValidation()
+  useEffect(() => resetForm(), [resetForm])
 
   useEffect(() => {
-    setValues({});
-    setErrors({});
-    setIsFormValid(false);
-  }, [isOpen]);
-
-  const handleChange = e => {
-    const { name, value } = e.target;
-    setValues({ ...values, [name]: value });
-    setErrors({ ...errors, [name]: e.target.validationMessage });
-    setIsFormValid(e.target.closest('form').checkValidity());
-  };
+    resetForm();
+  }, [isOpen, resetForm]);
 
   function handleSubmit(e) {
     e.preventDefault();
     onAddPlace(values);
-    setValues({});
-    setErrors({});
   }
 
   return (
     <PopupWithForm
       name='add-card-form'
       title='Новое место'
+      isPopup={true}
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
@@ -37,46 +28,28 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isSaving }) {
       isSaving={isSaving}
       buttonValues={{ isSaving: 'Создание...', default: 'Создать' }}
     >
-      <input
+      <Input
         type='text'
-        id='place-name'
-        className='form__input place-name'
         name='name'
+        isPopup={true}
         placeholder='Название'
         minLength='2'
         maxLength='30'
         required
-        value={values.name || ''}
         onChange={handleChange}
+        value={values.name || ''}
+        error={errors.name || ''}
       />
-      {isOpen && (
-        <span
-          className={`form__input-error${
-            errors.name === '' ? '' : ' form__input-error_visible'
-          }`}
-        >
-          {errors.name}
-        </span>
-      )}
-      <input
+      <Input
         type='url'
-        id='place-img-src'
-        className='form__input place-link'
         name='link'
+        isPopup={true}
         placeholder='Ссылка на картинку'
         required
-        value={values.link || ''}
         onChange={handleChange}
+        value={values.link || ''}
+        error={errors.link || ''}
       />
-      {isOpen && (
-        <span
-          className={`form__input-error${
-            errors.link === '' ? '' : ' form__input-error_visible'
-          }`}
-        >
-          {errors.link}
-        </span>
-      )}
     </PopupWithForm>
   );
 }

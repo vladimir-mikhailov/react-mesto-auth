@@ -1,0 +1,14 @@
+.header__burger-menu {
+  height: 24px;
+  width: 18px;
+  background: url(../../../images/burger-menu.svg) no-repeat center;
+  background-size: contain;
+}
+
+@media screen and (min-width: 618px) {
+  .header__burger-menu {
+    background: none;
+    height: unset;
+    width: unset;
+  }
+}

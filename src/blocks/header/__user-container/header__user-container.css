@@ -1,0 +1,21 @@
+.header__user-container {
+  font-size: 14px;
+  line-height: 17px;
+  font-weight: normal;
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 30px;
+}
+
+@media screen and (min-width: 618px) {
+  .header__user-container {
+    margin-right: 0;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .header__user-container {
+    font-size: 18px;
+    line-height: 22px;
+  }
+}
