@@ -155,10 +155,6 @@ function App() {
     history.push('/sign-in');
   };
 
-  // const handleClickOnOverlay = e => {
-  //   e.target === e.currentTarget && closeAllPopups();
-  // };
-
   function handleDeleteCardClick(card) {
     setCardToDelete(card);
     setIsDeleteCardPopupOpen(true);
