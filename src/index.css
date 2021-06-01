@@ -16,8 +16,6 @@
 @import url(./blocks/big-image-caption/big-image-caption.css);
 @import url(./blocks/button-close/button-close.css);
 @import url(./blocks/button-close/_desktop-hidden/button-close_desktop-hidden.css);
-@import url(./blocks/mobile-hidden/mobile-hidden.css);
-
 
 /* Header */
 @import url(./blocks/header/header.css);
@@ -93,3 +91,7 @@
 @import url(./blocks/form/__button/_popup/form__button_popup.css);
 @import url(./blocks/form/__bottom-text/form__bottom-text.css);
 @import url(./blocks/form/__bottom-link/form__bottom-link.css);
+
+/* Common Modifiers */
+@import url(./blocks/mobile-hidden/mobile-hidden.css);
+@import url(./blocks/desktop-hidden/desktop-hidden.css);

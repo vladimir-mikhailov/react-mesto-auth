@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import Form from './Form';
 import { Link } from 'react-router-dom';
 import Input from './Input';
-import { useFormValidation } from './useFormValidation';
+import { useFormValidation } from '../hooks/useFormValidation';
 
 const Register = ({ handleRegister, isSaving, isPopup }) => {
   const {

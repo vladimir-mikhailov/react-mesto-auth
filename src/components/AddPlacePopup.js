@@ -1,7 +1,7 @@
 import PopupWithForm from './PopupWithForm';
 import { useEffect } from 'react';
 import Input from './Input';
-import { useFormValidation } from './useFormValidation';
+import { useFormValidation } from '../hooks/useFormValidation';
 
 function AddPlacePopup({ isOpen, onClose, onAddPlace, isSaving }) {
   const {
@@ -11,7 +11,6 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isSaving }) {
     handleChange,
     resetForm,
   } = useFormValidation();
-  useEffect(() => resetForm(), [resetForm]);
 
   useEffect(() => {
     resetForm();

@@ -6,7 +6,7 @@ function Header({ handleLogout, userEmail, loggedIn }) {
   const [burgerIsOpen, setBurgerIsOpen] = useState(false);
 
   const handleClick = () => {
-    burgerIsOpen ? setBurgerIsOpen(false) : loggedIn && setBurgerIsOpen(true);
+    loggedIn && setBurgerIsOpen(!burgerIsOpen);
   };
 
   const handleBurgerLogout = () => {
@@ -38,15 +38,18 @@ function Header({ handleLogout, userEmail, loggedIn }) {
           title='Mesto Russia'
         />
         <div
-          className={`header__user-container${
-            loggedIn
-              ? burgerIsOpen
-                ? ' button-close button-close_desktop-hidden'
-                : ' header__burger-menu'
-              : ''
-          }`}
+          className={`
+        ${
+          loggedIn
+            ? burgerIsOpen
+              ? 'header__user-container button-close button-close_desktop-hidden'
+              : 'header__user-container header__burger-menu desktop-hidden'
+            : ''
+        }
+        `}
           onClick={handleClick}
-        >
+        />
+        <div className={`header__user-container${loggedIn ? ' mobile-hidden' : ''}`}>
           {loggedIn ? (
             <>
               <span className={`header__user-email mobile-hidden`}>

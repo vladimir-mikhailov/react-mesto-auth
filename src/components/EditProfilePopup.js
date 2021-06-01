@@ -2,7 +2,7 @@ import PopupWithForm from './PopupWithForm';
 import { useContext, useEffect } from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import Input from './Input';
-import { useFormValidation } from './useFormValidation';
+import { useFormValidation } from '../hooks/useFormValidation';
 
 function EditProfilePopup({
   isOpen,
@@ -23,9 +23,7 @@ function EditProfilePopup({
   } = useFormValidation();
 
   useEffect(() => {
-    resetForm();
-    setValues(currentUser);
-    setIsFormValid(true);
+    resetForm(currentUser, {}, true);
   }, [isOpen, currentUser, setIsFormValid, resetForm, setValues]);
 
   function handleSubmit(e) {

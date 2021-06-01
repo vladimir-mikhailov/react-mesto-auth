@@ -1,6 +1,6 @@
 import PopupWithForm from './PopupWithForm';
 import { useEffect } from 'react';
-import { useFormValidation } from './useFormValidation';
+import { useFormValidation } from '../hooks/useFormValidation';
 import Input from './Input';
 
 function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isSaving }) {
@@ -18,7 +18,6 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isSaving }) {
     onUpdateAvatar({
       avatar: values.avatar,
     });
-    e.target.reset();
     resetForm();
   }
 

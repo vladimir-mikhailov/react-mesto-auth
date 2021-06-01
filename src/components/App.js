@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Route, Switch, Redirect, useHistory } from 'react-router-dom';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
-import { HandleClickOnOverlayContext } from '../contexts/HandleClickOnOverlayContext';
 import api from '../utils/api';
 import auth from '../utils/auth';
 import translateError from '../utils/translateError';
@@ -32,7 +31,7 @@ function App() {
   const [cardToDelete, setCardToDelete] = useState({});
   const [infoTooltipType, setInfoTooltipType] = useState('');
   const [infoTooltipMessage, setInfoTooltipMessage] = useState('');
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
   const [userData, setUserData] = useState({
     email: '',
     id: '',
@@ -59,22 +58,13 @@ function App() {
   }, []);
 
   useEffect(() => {
-    function handleEscClose(evt) {
-      evt.key === 'Escape' && closeAllPopups();
-    }
+    const handleEscClose = e => {
+      e.key === 'Escape' && closeAllPopups();
+    };
 
     document.addEventListener('keydown', handleEscClose);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  // По заданию при повторном визите
-  // пользователи не должны вновь авторизовываться.
-  // Поэтому удаляем токен, даже если он остался
-  // после закрытия окна:
-  useEffect(() => {
-    localStorage.getItem('jwt') && localStorage.removeItem('jwt');
-  }, []);
-  // хотя логичнее было бы сразу залогинить
 
   const checkTokenAndGetUserData = () => {
     if (localStorage.getItem('jwt')) {
@@ -89,12 +79,15 @@ function App() {
         })
         .catch(err => {
           console.log(err);
+          setLoggedIn(false);
         });
+    } else {
+      setLoggedIn(false);
     }
   };
-  // Будет автологин, когда перестанем удалять токен при открытии окна
+
   // eslint-disable-next-line
-  useEffect(() => checkTokenAndGetUserData(), [])
+  useEffect(() => checkTokenAndGetUserData(), []);
 
   const resetInfoTooltip = () => {
     setInfoTooltipType('');
@@ -162,9 +155,9 @@ function App() {
     history.push('/sign-in');
   };
 
-  const handleClickOnOverlay = e => {
-    e.target === e.currentTarget && closeAllPopups();
-  };
+  // const handleClickOnOverlay = e => {
+  //   e.target === e.currentTarget && closeAllPopups();
+  // };
 
   function handleDeleteCardClick(card) {
     setCardToDelete(card);
@@ -259,87 +252,85 @@ function App() {
       .catch(err => console.log(err));
   };
   return (
-    <HandleClickOnOverlayContext.Provider value={handleClickOnOverlay}>
-      <CurrentUserContext.Provider value={currentUser}>
-        <div className='page'>
-          <Header
-            handleLogout={handleLogout}
-            userEmail={userData.email}
+    <CurrentUserContext.Provider value={currentUser}>
+      <div className='page'>
+        <Header
+          handleLogout={handleLogout}
+          userEmail={userData.email}
+          loggedIn={loggedIn}
+        />
+        <Switch>
+          <ProtectedRoute
+            exact
+            path='/'
             loggedIn={loggedIn}
+            component={Main}
+            onEditProfile={handleEditProfileClick}
+            onAddPlace={handleAddPlaceClick}
+            onEditAvatar={handleEditAvatarClick}
+            onCardClick={handleCardClick}
+            onCardLike={handleCardLike}
+            onCardDelete={handleDeleteCardClick}
+            cards={cards}
           />
-          <Switch>
-            <ProtectedRoute
-              exact
-              path='/'
-              loggedIn={loggedIn}
-              component={Main}
-              onEditProfile={handleEditProfileClick}
-              onAddPlace={handleAddPlaceClick}
-              onEditAvatar={handleEditAvatarClick}
-              onCardClick={handleCardClick}
-              onCardLike={handleCardLike}
-              onCardDelete={handleDeleteCardClick}
-              cards={cards}
+          <Route path='/sign-up'>
+            <Register
+              handleRegister={handleRegister}
+              isSaving={isSaving}
+              isPopup={false}
             />
-            <Route path='/sign-up'>
-              <Register
-                handleRegister={handleRegister}
-                isSaving={isSaving}
-                isPopup={false}
-              />
-            </Route>
-            <Route path='/sign-in'>
-              {loggedIn && <Redirect to='/' />}
-              <Login
-                handleLogin={handleLogin}
-                isSaving={isSaving}
-                isPopup={false}
-              />
-            </Route>
-            <Route path='*'>
-              <Redirect to={loggedIn ? '/' : '/sign-in'} />
-            </Route>
-          </Switch>
-          <Footer />
-          <EditAvatarPopup
-            isOpen={isEditAvatarPopupOpen}
-            onClose={closeAllPopups}
-            onUpdateAvatar={handleUpdateAvatar}
-            isSaving={isSaving}
-          />
-          <EditProfilePopup
-            isOpen={isEditProfilePopupOpen}
-            onClose={closeAllPopups}
-            onUpdateUser={handleUpdateUser}
-            isSaving={isSaving}
-          />
-          <AddPlacePopup
-            isOpen={isAddPlacePopupOpen}
-            onClose={closeAllPopups}
-            onAddPlace={handleAddPlaceSubmit}
-            isSaving={isSaving}
-          />
-          <ImagePopup
-            card={selectedCard}
-            isOpen={isImagePopupOpen}
-            onClose={closeAllPopups}
-          />
-          <PopupDeleteCard
-            isOpen={isDeleteCardPopupOpen}
-            onDelete={handleCardDelete}
-            card={cardToDelete}
-            onClose={closeAllPopups}
-            isSaving={isSaving}
-          />
-          <InfoTooltip
-            isOpen={isInfoTooltipPopupOpen}
-            onClose={closeInfoTooltipPopup}
-            type={infoTooltipType}
-            message={infoTooltipMessage}
-          />
-        </div>
-      </CurrentUserContext.Provider>
-    </HandleClickOnOverlayContext.Provider>
+          </Route>
+          <Route path='/sign-in'>
+            {loggedIn && <Redirect to='/' />}
+            <Login
+              handleLogin={handleLogin}
+              isSaving={isSaving}
+              isPopup={false}
+            />
+          </Route>
+          <Route path='*'>
+            <Redirect to={loggedIn ? '/' : '/sign-in'} />
+          </Route>
+        </Switch>
+        <Footer />
+        <EditAvatarPopup
+          isOpen={isEditAvatarPopupOpen}
+          onClose={closeAllPopups}
+          onUpdateAvatar={handleUpdateAvatar}
+          isSaving={isSaving}
+        />
+        <EditProfilePopup
+          isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
+          onUpdateUser={handleUpdateUser}
+          isSaving={isSaving}
+        />
+        <AddPlacePopup
+          isOpen={isAddPlacePopupOpen}
+          onClose={closeAllPopups}
+          onAddPlace={handleAddPlaceSubmit}
+          isSaving={isSaving}
+        />
+        <ImagePopup
+          card={selectedCard}
+          isOpen={isImagePopupOpen}
+          onClose={closeAllPopups}
+        />
+        <PopupDeleteCard
+          isOpen={isDeleteCardPopupOpen}
+          onDelete={handleCardDelete}
+          card={cardToDelete}
+          onClose={closeAllPopups}
+          isSaving={isSaving}
+        />
+        <InfoTooltip
+          isOpen={isInfoTooltipPopupOpen}
+          onClose={closeInfoTooltipPopup}
+          type={infoTooltipType}
+          message={infoTooltipMessage}
+        />
+      </div>
+    </CurrentUserContext.Provider>
   );
 }
 
